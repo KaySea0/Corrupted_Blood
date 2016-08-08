@@ -1,9 +1,9 @@
 %initial conditions
 pop = 1000; % total population of area
 bomb = 2; % number of initial infected
-r = .75; % radius of infection
-numSteps = 18; % number of generations to simulate
-numIterations = 10000; % number of times to repeat simulation
+r = .6; % radius of infection
+numSteps = 80; % number of generations to simulate
+numIterations = 1; % number of times to repeat simulation
 
   %plot graph / modify area to get desired lambda
   R = unifrnd(0,1,pop,2);
@@ -125,37 +125,39 @@ for iter=1:numIterations,
             end
         end
         
-%         if step == 6 || step == 12 || step == 18
-%             healthyPop = [];
-%             infectedPop = [];
-%             for i=1:pop,
-%                 if analysis(i,3) == 0,
-%                     healthyPop = [healthyPop; analysis(i,1) analysis(i,2)];
-%                 else
-%                     infectedPop = [infectedPop; analysis(i,1) analysis(i,2)];
-%                 end
-%             end
-% 
-%             fileName = 'sim_gen_';
-%             if step == 6
-%                 fileName = strcat(fileName,'6');
-%             elseif step == 12
-%                 fileName = strcat(fileName,'12');
-%             else
-%                 fileName = strcat(fileName,'18');
-%             end
-% 
-%             if isempty(healthyPop)
-%                 plot(infectedPop(:,1), infectedPop(:,2), 'r.');
-%                 grid off
-%             else
-%                 plot(healthyPop(:,1), healthyPop(:,2), 'g.', ...
-%                      infectedPop(:,1), infectedPop(:,2), 'r.');
-%                 grid off
-%             end
-%             
-%             saveas(gcf,fileName,'jpg');
-%         end 
+        if step == 20 || step == 40 || step == 60 || step == 80
+            healthyPop = [];
+            infectedPop = [];
+            for i=1:pop,
+                if analysis(i,3) == 0,
+                    healthyPop = [healthyPop; analysis(i,1) analysis(i,2)];
+                else
+                    infectedPop = [infectedPop; analysis(i,1) analysis(i,2)];
+                end
+            end
+
+            fileName = 'super_crit_gen_';
+            if step == 20
+                fileName = strcat(fileName,'20');
+            elseif step == 40
+                fileName = strcat(fileName,'40');
+            elseif step == 60
+                fileName = strcat(fileName,'60');
+            elseif step == 80
+                fileName = strcat(fileName,'80');
+            end
+
+            if isempty(healthyPop)
+                plot(infectedPop(:,1), infectedPop(:,2), 'r.');
+                grid off
+            else
+                plot(healthyPop(:,1), healthyPop(:,2), 'g.', ...
+                     infectedPop(:,1), infectedPop(:,2), 'r.');
+                grid off
+            end
+            
+            saveas(gcf,fileName,'jpg');
+        end 
     end
     
     if size(averages) == [0,0]
