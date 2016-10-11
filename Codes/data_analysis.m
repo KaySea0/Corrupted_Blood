@@ -93,6 +93,7 @@ for i=0:18,
     eq4 = [eq4; i val4];
 end
 
+%score modulation based on l^2 norm
 modelAScore = sqrt(modelAScore)./19;
 modelBScore = sqrt(modelBScore)./19;
 modelCScore = sqrt(modelCScore)./19;
