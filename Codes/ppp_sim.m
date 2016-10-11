@@ -124,11 +124,19 @@ for iter=1:numIterations,
                 analysis(i,3) = 3;
             end
         end
-        
+
+		%%%
+		%this section is used to produce graphs of the simulation's map
+		%of nodes at designated generations; these graphs signify 
+		%infected persons as red and healthy persons as green
+		%%%
+		
+		%set which generations to produce graphs
         if step == 20 || step == 40 || step == 60 || step == 80
-            healthyPop = [];
-            infectedPop = [];
+            healthyPop = []; %will contain all healthy nodes
+            infectedPop = []; %will contain all infected nodes
             for i=1:pop,
+				%add nodes to correct lists based on infection status
                 if analysis(i,3) == 0,
                     healthyPop = [healthyPop; analysis(i,1) analysis(i,2)];
                 else
@@ -136,8 +144,13 @@ for iter=1:numIterations,
                 end
             end
 
+			%generates name for graph based on generation and simulation settings;
+			%all of this information must be set manually and known beforehand
+			
+			%beginning of file name designates infection scenario (percolation theory)
             fileName = 'super_crit_gen_';
-            if step == 20
+            %concatenate generation number to end of file name
+			if step == 20
                 fileName = strcat(fileName,'20');
             elseif step == 40
                 fileName = strcat(fileName,'40');
@@ -147,19 +160,23 @@ for iter=1:numIterations,
                 fileName = strcat(fileName,'80');
             end
 
+			%if all nodes are infected, only worry about graphing infected nodes
             if isempty(healthyPop)
                 plot(infectedPop(:,1), infectedPop(:,2), 'r.');
                 grid off
-            else
+            %if mix of healthy and infected nodes present, graph both with color
+			else
                 plot(healthyPop(:,1), healthyPop(:,2), 'g.', ...
                      infectedPop(:,1), infectedPop(:,2), 'r.');
                 grid off
             end
             
+			%save file to local directory where this script is saved
             saveas(gcf,fileName,'jpg');
         end 
     end
     
+	%adds generation to total infected table component-wise
     if size(averages) == [0,0]
         averages = iTable;
     else
